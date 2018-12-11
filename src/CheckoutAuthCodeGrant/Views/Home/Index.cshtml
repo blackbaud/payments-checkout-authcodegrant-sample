@@ -1,0 +1,43 @@
+﻿@model CheckoutAuthCodeGrant.Models.HomeViewModel
+@{
+    ViewBag.JumbotronDescription = "The login page would be provided to a user within an organization that uses a Blackbaud product.  " +
+                                   "The organization user would visit the login page in order to authenticate with Sky API so that this application can consume Sky API functionality and the organization's data on behalf of the user.  " +
+                                   "The checkout page would be provided to a donor of an organization.  The donor would visit this page in order to make a donation to the organization using the Checkout functionality.";
+    ViewBag.JumbotronTitle = "This is a sample web application to demonstrate Checkout functionality using OAuth code grant flow with Sky API.";
+    ViewBag.Title = "Home";
+}
+
+@* Display the current application configuration. *@
+<div class="row">
+    <div class="col-md-12">
+        <p>The application has been initialized with the following values:</p>
+
+        <dl class="row">
+            <dt class="col-md-3">@Html.DisplayNameFor(m => m.ApplicationId)</dt>
+            <dd class="col-md-9">@Html.ValueFor(m => m.ApplicationId)<label></label></dd>
+
+            <dt class="col-md-3">@Html.DisplayNameFor(m => m.ApplicationSecretSet)</dt>
+            <dd class="col-md-9">@Html.ValueFor(m => m.ApplicationSecretSet)</dd>
+
+            <dt class="col-md-3">@Html.DisplayNameFor(m => m.ApplicationCallbackUri)</dt>
+            <dd class="col-md-9">@Html.ValueFor(m => m.ApplicationCallbackUri)</dd>
+        </dl>
+    </div>
+</div>
+
+@* Display any application configuration errors that would prevent login to Sky API. *@
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.ErrorsViewModel.Errors.Any())
+        {
+            @Html.Partial("_Errors", Model.ErrorsViewModel)
+        }
+        else
+        {
+            <div class="alert alert-success" role="alert">
+                <strong>Success</strong>
+                <p>Everything appears valid to proceed to the <a href="/login">login page</a>.</p>
+            </div>
+        }
+    </div>
+</div>

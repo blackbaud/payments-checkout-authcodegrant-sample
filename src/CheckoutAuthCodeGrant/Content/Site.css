@@ -1,0 +1,22 @@
+﻿dd {
+    /* When a dd is empty the next dt will wrap into the empty dd location. */
+    min-height: 20px !important;
+    /* Specifically for the Sky API access token which has no spaces. */
+    word-break: break-all;
+}
+
+dd:not(:first-of-type) {
+    /* Add some padding between dl items. */
+    padding-top: 5px;
+}
+
+dt:not(:first-of-type) {
+    /* Add some padding between dl items. */
+    padding-top: 5px;
+}
+
+.container-fluid {
+    /* Extend fluid containers to the edges of the screen instead of leaving a 15px gap. */
+    padding-left: 0px;
+    padding-right: 0px;
+}

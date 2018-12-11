@@ -1,0 +1,109 @@
+﻿@model CheckoutAuthCodeGrant.Models.CheckoutViewModel
+@{
+    ViewBag.JumbotronDescription = "The checkout page is an example of the interaction with Checkout that would be provided to a donor of an organization.  " +
+                                   "A public key, payment configurationm and amount are passed to the Checkout form which is invoked when a donor selects the 'Donate' button.  " +
+                                   "After the donor has completed the initial payment process, Checkout will return a transaction identifier to this page which will be used to charge the payment.  " +
+                                   "All information and functionality on this page except for the 'Sample donation form' is provided for clarity and should not typically be exposed to the donor.";
+    ViewBag.JumbotronTitle = "This is a sample donation page using Checkout with Payments API.";
+    ViewBag.Title = "Checkout";
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("https://payments.blackbaud.com/Checkout/bbCheckout.2.0.js")
+
+    <script>
+        $(document).ready(function () {
+            var data = @Html.Raw(Json.Encode(Model));
+            var vm = new CheckoutViewModel(data);
+            ko.applyBindings(vm);
+        });
+    </script>
+}
+
+@* Display the current Checkout state. *@
+<div class="row">
+    <div class="col-md-12">
+        <p>Checkout is currently initialized with the following values:</p>
+
+        <dl class="row">
+            <dt class="col-md-3">@Html.DisplayNameFor(m => m.PublicKey)</dt>
+            <dd class="col-md-9" data-bind="text: publicKey"></dd>
+
+            <dt class="col-md-3">@Html.DisplayNameFor(m => m.SelectedPaymentConfigurationId)</dt>
+            <dd class="col-md-9" data-bind="text: paymentConfigurationId"></dd>
+        </dl>
+
+        <p>
+            Checkout requires a payment configuration to be selected.  This page provides a list of payment configurations for your convenience but a payment configuration should not be chosen by the donor.
+            A real donation application might allow only the organization user to select the payment configuration during the login process.
+        </p>
+    </div>
+
+    <div class="col-md-6" style="margin-bottom: 20px">
+        @Html.DropDownListFor(m => m.SelectedPaymentConfigurationId, Model.PaymentConfigurations, new { @class = "form-control", data_bind = "value: paymentConfigurationId" })
+    </div>
+</div>
+
+@* Display a sample donation form. *@
+<div class="row" style="margin-bottom: 15px">
+    <div class="col-md-6 col-md-offset-3">
+        <form style="background: aliceblue; border: 1px dashed black; border-radius: 25px; padding: 0 15px 15px 15px;">
+            <h3 style="text-align: center">Sample donation form</h3>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="text" class="form-control" style="text-align: right" data-bind="value: amount" />
+                        <span class="input-group-addon">.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 15px">
+                <div class="col-md-12 text-center">
+                    @* Checkout button (see Scripts/app/checkout.viewmodel.js for launchCheckout). *@
+                    <a class="btn btn-default" data-bind="click: launchCheckout">Donate</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@* Display any Checkout configuration errors that would prevent Checkout from processing. *@
+<div class="row" data-bind="visible: !checkoutFailure() && !checkoutSuccess()">
+    <div class="col-md-12">
+        @if (Model.ErrorsViewModel.Errors.Any())
+        {
+            @Html.Partial("_Errors", Model.ErrorsViewModel)
+        }
+        else
+        {
+            <div class="alert alert-success" role="alert">
+                <strong>Success</strong>
+                <p>Everything appears valid to accept a donation with Checkout.</p>
+            </div>
+        }
+    </div>
+</div>
+
+@* Display any errors that occurred during Checkout. *@
+<div class="row hidden" data-bind="css: { hidden: !checkoutFailure() }">
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">
+            <strong>Checkout failed</strong>
+            <p data-bind="text: checkoutError"></p>
+        </div>
+    </div>
+</div>
+
+@* Display upon successful Checkout. *@
+<div class="row hidden" data-bind="css: { hidden: !checkoutSuccess() }">
+    <div class="col-md-12">
+        <div class="alert alert-success" role="alert">
+            <strong>Checkout succeeded</strong>
+            <p>Donation has been processed.</p>
+        </div>
+    </div>
+</div>

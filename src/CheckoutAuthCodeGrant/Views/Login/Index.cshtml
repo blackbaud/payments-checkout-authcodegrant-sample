@@ -1,0 +1,49 @@
+﻿@model CheckoutAuthCodeGrant.Models.LoginViewModel
+@{
+    ViewBag.JumbotronDescription = "The login page is an example of a page that would be provided to a user within an organization that uses a Blackbaud product.  " +
+                                   "The organization user would visit the login page in order to authenticate with Sky API so that this application can consume Sky API functionality and the organization's data on behalf of the organization user.";
+    ViewBag.JumbotronTitle = "This is a sample login page using OAuth code grant flow with Sky API.";
+    ViewBag.Title = "Login";
+}
+
+@* Display the current Sky API authentication state. *@
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.IsLoggedIn)
+        {
+            <p>A user is currently authenticated with Sky API:</p>
+
+            <dl class="row">
+                <dt class="col-md-3">@Html.DisplayNameFor(m => m.AccessToken)</dt>
+                <dd class="col-md-9">@Html.ValueFor(m => m.AccessToken)</dd>
+
+                <dt class="col-md-3">@Html.DisplayNameFor(m => m.RefreshToken)</dt>
+                <dd class="col-md-9">@Html.ValueFor(m => m.RefreshToken)</dd>
+            </dl>
+
+            <a href="/skyapi/refresh" class="btn btn-default" style="margin-bottom: 20px">Refresh tokens</a>
+            <a href="/skyapi/logout" class="btn btn-default" style="margin-bottom: 20px">Log out</a>
+        }
+        else
+        {
+            <a href="/skyapi/login" class="btn btn-default" style="margin-bottom: 20px">Log in</a>
+        }
+    </div>
+</div>
+
+@* Display any authentication errors that would prevent requests to Payments API. *@
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.ErrorsViewModel.Errors.Any())
+        {
+            @Html.Partial("_Errors", Model.ErrorsViewModel)
+        }
+        else
+        {
+            <div class="alert alert-success" role="alert">
+                <strong>Success</strong>
+                <p>Everything appears valid to proceed to the <a href="/checkout">checkout page</a>.</p>
+            </div>
+        }
+    </div>
+</div>
