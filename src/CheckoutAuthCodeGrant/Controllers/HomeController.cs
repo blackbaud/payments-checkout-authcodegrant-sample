@@ -32,6 +32,18 @@
         /// </summary>
         private async Task FindPotentialApplicationErrors(HomeViewModel homeViewModel)
         {
+            // Check that the subscription key has been set.
+            if (string.IsNullOrWhiteSpace(Configuration.SubscriptionKey))
+            {
+                homeViewModel.ErrorsViewModel.Errors.Add(new ErrorViewModel
+                {
+                    Error = "Subscription key not configured",
+                    Description = "The subscription key represents Blackbaud's permission to you to use the SKY API functionality.  " +
+                                  "Without a subscription key this sample application is unauthorized to use Sky API functionality. " +
+                                  "You can find subscription key at <a href='https://developer.sky.blackbaud.com/developer'>SKY API developer account</a> page."
+                });
+            }
+
             // Check that this application's Sky API application ID has been set.
             if (string.IsNullOrWhiteSpace(homeViewModel.ApplicationId))
             {
@@ -39,7 +51,9 @@
                 {
                     Error = "Application ID not configured",
                     Description = "The application ID is used by Sky API to validate the calling application when making requests to Sky API.  " +
-                                  "Without an application ID this sample application will not be able to authenticate a user with Sky API or use Sky API functionality."
+                                  "Without an application ID this sample application will not be able to authenticate a user with Sky API or use Sky API functionality.  " +
+                                  "You can find application ID at <a href=' https://developer.blackbaud.com/apps/'>SKY API application</a> page."
+
                 });
             }
 
@@ -50,7 +64,8 @@
                 {
                     Error = "Application secret not configured",
                     Description = "The application secret is used by Sky API to validate the calling application when making requests to Sky API.  " +
-                                  "Without an application secret this sample application will not be able to authenticate a user with Sky API nor use Sky API functionality."
+                                  "Without an application secret this sample application will not be able to authenticate a user with Sky API nor use Sky API functionality.  " +
+                                  "You can find application secret at <a href=' https://developer.blackbaud.com/apps/'>SKY API application</a> page."
                 });
             }
 

@@ -6,7 +6,7 @@
     {
         <div class="alert alert-danger" role="alert">
             <strong>@Html.ValueFor(m => error.Error)</strong>
-            <p>@Html.ValueFor(m => error.Description)</p>
+            <p>@Html.Raw(error.Description)</p>
         </div>
     }
 </div>
