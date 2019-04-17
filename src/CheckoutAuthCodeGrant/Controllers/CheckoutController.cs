@@ -29,7 +29,7 @@
             // Return any error to display to the user.
             if (!response.IsSuccessStatusCode)
             {
-                var errorMessage = TryGetErrorMessage(content);
+                var errorMessage = WebUtility.HtmlEncode(TryGetErrorMessage(content));
 
                 if (string.IsNullOrWhiteSpace(errorMessage))
                 {
@@ -73,7 +73,7 @@
             // Check that the request to get payment configurations was successful.
             if (!response.IsSuccessStatusCode)
             {
-                var errorMessage = TryGetErrorMessage(content);
+                var errorMessage = WebUtility.HtmlEncode(TryGetErrorMessage(content));
 
                 if (string.IsNullOrWhiteSpace(errorMessage))
                 {
@@ -134,7 +134,7 @@
             // Check that the request to get the public key was successful.
             if (!response.IsSuccessStatusCode)
             {
-                var errorMessage = TryGetErrorMessage(content);
+                var errorMessage = WebUtility.HtmlEncode(TryGetErrorMessage(content));
 
                 if (string.IsNullOrWhiteSpace(errorMessage))
                 {
