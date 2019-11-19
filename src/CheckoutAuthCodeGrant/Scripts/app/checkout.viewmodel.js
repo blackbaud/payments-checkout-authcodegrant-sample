@@ -26,7 +26,7 @@ function CheckoutViewModel(data) {
 
         self.checkoutToken = '';
 
-        // See https://developer.blackbaud.com/skyapi/beta/payments/checkout/supported-transactions#card-not-present-payment for Blackbaud_OpenPaymentForm documentation.
+        // See https://developer.blackbaud.com/skyapi/apis/payments/checkout/supported-transactions#card-not-present-payment for Blackbaud_OpenPaymentForm documentation.
         var data = {
             'amount': self.amount(),
             'client_app_name': 'CheckoutAuthCodeGrant Sample Application',
@@ -58,13 +58,13 @@ function CheckoutViewModel(data) {
     }
 
     // When checkout completes, finialize the donation by charging the transaction.
-    // See https://developer.blackbaud.com/skyapi/beta/payments/checkout/integration-guide/standard-workflow#events for checkoutComplete documentation.
+    // See https://developer.blackbaud.com/skyapi/apis/payments/checkout/integration-guide/standard-workflow#events for checkoutComplete documentation.
     document.addEventListener('checkoutComplete', function (event) {
         self.chargeDonation(event.detail.transactionToken);
     });
 
     // When checkout returns an error display it to the user.
-    // See https://developer.blackbaud.com/skyapi/beta/payments/checkout/integration-guide/standard-workflow#error-handling for checkoutError documentation.
+    // See https://developer.blackbaud.com/skyapi/apis/payments/checkout/integration-guide/standard-workflow#error-handling for checkoutError documentation.
     document.addEventListener('checkoutError', function (event) {
         self.checkoutError(event.detail.errorText);
         self.checkoutFailure(true);
