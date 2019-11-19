@@ -40,7 +40,7 @@
                     Error = "Subscription key not configured",
                     Description = "The subscription key represents Blackbaud's permission to you to use the SKY API functionality.  " +
                                   "Without a subscription key this sample application is unauthorized to use Sky API functionality. " +
-                                  "You can find subscription key at <a href='https://developer.sky.blackbaud.com/developer'>SKY API developer account</a> page."
+                                  "You can find subscription key at <a href='https://developer.blackbaud.com/subscriptions/'>SKY API developer account</a> page."
                 });
             }
 
